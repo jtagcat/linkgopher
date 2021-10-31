@@ -40,7 +40,7 @@ function handler(links, pattern) {
   // To filter links like: javascript:void(0)
   const resLinks = links.filter(link => link.lastIndexOf('://', 10) > 0);
   // Remove duplicate, sorting of links.
-  const items = [...(new Set(resLinks))].sort();
+  const items = [...(new Set(resLinks))];
   const re = pattern ? new RegExp(pattern, 'g') : null;
   const added = items.filter(link => addNodes(link, containerLinks, re));
 
@@ -48,7 +48,7 @@ function handler(links, pattern) {
     return message.dataset.content = chrome.i18n.getMessage('noMatches');
   }
   // Extract base URL from link, remove duplicate, sorting of domains.
-  const domains = [...(new Set(added.map(link => getBaseURL(link))))].sort();
+  const domains = [...(new Set(added.map(link => getBaseURL(link))))];
   const reDomains = filteringDomains ? re : null;
   domains.forEach(domain => addNodes(domain, containerDomains, reDomains));
 };
